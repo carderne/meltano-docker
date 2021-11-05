@@ -22,3 +22,5 @@ COPY . .
 
 # Expose default port used by `meltano ui`
 EXPOSE $PORT
+
+CMD ["meltano", "ui"]
