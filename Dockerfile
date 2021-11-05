@@ -19,6 +19,3 @@ ENV MELTANO_PROJECT_READONLY 1
 
 # Copy over remaining project files
 COPY . .
-
-
- CMD ["meltano", "ui"]
