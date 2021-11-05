@@ -20,9 +20,5 @@ ENV MELTANO_PROJECT_READONLY 1
 # Copy over remaining project files
 COPY . .
 
-# Expose default port used by `meltano ui`
-EXPOSE 5000
 
-ENTRYPOINT ["meltano"]
-
-CMD ["meltano", "ui"]
+ CMD ["meltano", "ui"]
