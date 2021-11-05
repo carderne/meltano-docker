@@ -1,2 +1,8 @@
 version: 1
 send_anonymous_usage_stats: true
+project_id: 240534a0-40be-455e-8b27-375ee1343ac6
+plugins:
+  extractors:
+  - name: tap-gitlab
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-gitlab.git
