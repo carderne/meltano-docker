@@ -21,6 +21,8 @@ ENV MELTANO_PROJECT_READONLY 1
 COPY . .
 
 # Expose default port used by `meltano ui`
-EXPOSE 80
+EXPOSE 5000
 
 ENTRYPOINT ["meltano"]
+
+CMD ["meltano", "ui"]
