@@ -1,11 +1,2 @@
 version: 1
 send_anonymous_usage_stats: true
-plugins:
-  extractors:
-  - name: tap-gitlab
-    variant: meltanolabs
-    pip_url: git+https://github.com/MeltanoLabs/tap-gitlab.git
-  loaders:
-  - name: target-postgres
-    variant: transferwise
-    pip_url: pipelinewise-target-postgres
