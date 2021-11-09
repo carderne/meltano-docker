@@ -1,21 +1,25 @@
-ARG MELTANO_IMAGE=meltano/meltano:latest
-FROM $MELTANO_IMAGE
+# syntax=docker/dockerfile:1
 
-WORKDIR /project
+FROM ubuntu:20.04
 
-# Install any additional requirements
-COPY ./requirements.txt . 
-RUN pip install -r requirements.txt
+RUN apt-get update && \
+    apt-get install -y -q \
+    gcc \
+    sqlite3 \
+    libsqlite3-dev \
+    python3 \
+    python3-pip \
+    python3-venv # Add this line
 
-# Install all plugins into the `.meltano` directory
-COPY ./meltano.yml . 
+
+WORKDIR /app
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+ENV MELTANO_DATABASE_URI=postgresql://<user>:<password>@<host>:<port>/<db>
+RUN mkdir .meltano/
 RUN meltano install
 
-# Pin `discovery.yml` manifest by copying cached version to project root
-RUN cp -n .meltano/cache/discovery.yml . 2>/dev/null || :
-
-# Don't allow changes to containerized project files
-ENV MELTANO_PROJECT_READONLY 1
-
-# Copy over remaining project files
-COPY . .
+CMD [ "meltano", "ui"]

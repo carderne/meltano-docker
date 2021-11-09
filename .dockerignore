@@ -2,7 +2,7 @@
 
 # .gitignore
 /venv
-/.meltano
+#/.meltano
 /.env
 /ui.cfg
 /output

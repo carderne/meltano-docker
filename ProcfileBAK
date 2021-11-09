@@ -1,1 +1,0 @@
-web: meltano ui

@@ -1,22 +1,32 @@
-# meltano-heroku-docker
+# meltano-docker
 
-## Usage
-**Important** steps:
-1. Create a new Heroku app (but don't connect to GitHub)
-2. Run `heroku stack:set container -a "your-heroku-app-name"
-3. Connect to GitHub and deploy
-
-## Recreate this repo
+## How to create this directory
 ```
-Setup the diretory:
-pip install meltano
-meltano init meltano-heroku && cd meltano-heroku
-echo "meltano" > requirements.txt
-meltano add extractor tap-gitlab
-meltano add files docker
+pip install -r requirements.txt
+meltano init <dir-name>
 ```
 
-Then:
-1. Remove the `ENTRYPOINT` from the `Dockerfile`
-2. Add `heroku.yml`
-3. Add the `Procfile`
+## Database
+Create a Postgres database somewhere on the cloud. Allow access from any IP and note user settings (must be fully priveleged, probably the `postgres` user).
+
+## Run Meltano UI
+To test the database connection.
+```
+export MELTANO_DATABASE_URI=postgresql://<user>:<password>@<host>:<port>/<db>
+meltano ui
+```
+
+## Deploy to the cloud
+Update the Dockerfile with the DB connection (needed during image creation and running).
+```
+ENV MELTANO_DATABASE_URI=postgresql://<user>:<password>@<host>:<port>/<db>
+```
+
+And deploy to the cloud:
+```
+gcloud builds submit . --tag=gcr.io/<project>/<image-name>
+gcloud run deploy <run-name> \
+  --image=gcr.io/<project>/<image-name> \
+  --region=europe-west4 \
+  --allow-unauthenticated
+```
