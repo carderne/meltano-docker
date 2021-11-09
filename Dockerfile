@@ -19,6 +19,11 @@ RUN pip3 install -r requirements.txt
 COPY . .
 
 ENV MELTANO_DATABASE_URI=postgresql://<user>:<password>@<host>:<port>/<db>
+
+ENV MELTANO_UI_SESSION_COOKIE_SECURE=true
+ENV MELTANO_UI_FORWARDED_ALLOW_IPS="*"
+ENV FORWARDED_ALLOW_IPS="*"
+
 RUN mkdir .meltano/
 RUN meltano install
 
